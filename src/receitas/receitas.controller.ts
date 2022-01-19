@@ -20,13 +20,12 @@ export class ReceitasController {
 
     @Post()
     cadastrar(@Body() receita: Receita) {
-        receita.id = 300;
-        this.receitasService.cadastrar(receita);
+        this.receitasService.cadastrar(receita)
     }
-
-    @Put()
-    alterar(@Body() receita: Receita): Receita {
-        return this.receitasService.alterar(receita);
+        
+    @Put(':id')
+    atualizar(@Body() receita: Receita) : Receita {
+        return this.receitasService.alterar(receita)
     }
 
     @Delete(':id')

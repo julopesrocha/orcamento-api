@@ -4,9 +4,11 @@ import { Receita } from "./receitas.module";
 @Injectable()
 export class ReceitasService {
     receitas: Receita[] = [
+       /*
         new Receita("Salário", 2000, new Date),
         new Receita("Renda extra", 500, new Date),
         new Receita("Prêmio", 1000, new Date)
+    */
     ];
 
     obterTodas(): Receita[] {
@@ -18,7 +20,6 @@ export class ReceitasService {
     }
 
     cadastrar(receita: Receita) {
-        receita.id = 300;
         this.receitas.push(receita);
     }
 
