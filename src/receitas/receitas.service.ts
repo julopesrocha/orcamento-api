@@ -1,34 +1,37 @@
 import { Injectable } from "@nestjs/common";
+import { InjectModel } from "@nestjs/sequelize";
 import { Receita } from "./receitas.module";
 
 @Injectable()
 export class ReceitasService {
-    receitas: Receita[] = [
-       /*
-        new Receita("Salário", 2000, new Date),
-        new Receita("Renda extra", 500, new Date),
-        new Receita("Prêmio", 1000, new Date)
-    */
-    ];
+    constructor(
+        @InjectModel(Receita)
+        private receitaModel: typeof Receita
+    ) {}
 
-    obterTodas(): Receita[] {
-        return this.receitas;
+    async obterTodas(): Promise<Receita[]> {
+        return this.receitaModel.findAll();
     }
 
-    obterUma(id: number): Receita {
-        return this.receitas[0];
+    async obterUma(id: number): Promise<Receita> {
+        return this.receitaModel.findByPk(id);
     }
 
-    cadastrar(receita: Receita) {
-        this.receitas.push(receita);
+    async cadastrar(receita: Receita) {
+        this.receitaModel.create(receita);
     }
 
-    alterar(receita: Receita): Receita {
-        return receita;
+    async alterar(receita: Receita): Promise<[number, Receita[]]> {
+        return this.receitaModel.update(receita, {
+            where: {
+                id: receita.id
+            }
+        });
     }
 
-    apagar(id: number) {
-        this.receitas.pop();
+    async apagar(id: number) {
+        const receita: Receita = await this.obterUma(id);
+        receita.destroy();
     }
 
 

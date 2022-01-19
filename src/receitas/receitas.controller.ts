@@ -9,27 +9,27 @@ export class ReceitasController {
     }
 
     @Get()
-    obterTodas(): Receita[] {
+    async obterTodas(): Promise<Receita[]> {
         return this.receitasService.obterTodas();
     }
 
     @Get(':id')
-    obterUma(@Param() params): Receita {
+    async obterUma(@Param() params): Promise<Receita> {
         return this.receitasService.obterUma(params.id)
     }
 
     @Post()
-    cadastrar(@Body() receita: Receita) {
+    async cadastrar(@Body() receita: Receita) {
         this.receitasService.cadastrar(receita)
     }
         
     @Put(':id')
-    atualizar(@Body() receita: Receita) : Receita {
+    async alterar(@Body() receita: Receita) : Promise<[number, Receita[]]> {
         return this.receitasService.alterar(receita)
     }
 
     @Delete(':id')
-    apagar(@Param() params) {
+    async apagar(@Param() params) {
         this.receitasService.apagar(params.id);
     }
 }
